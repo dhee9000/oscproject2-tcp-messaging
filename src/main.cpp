@@ -103,12 +103,16 @@ void *spawnServer(void *data)
             pthread_exit(0);
         }
 
-        if (active_connections >= MAX_CONNECTIONS)
-        {
-            for (int i = 0; i < MAX_CONNECTIONS; i++)
-                pthread_join(thread_ids[i], NULL);
-            pthread_exit(0);
-        }
+        // Wait for server threads to end
+        // if (active_connections >= MAX_CONNECTIONS)
+        // {
+        //     for (int i = 0; i < MAX_CONNECTIONS; i++)
+        //         pthread_join(thread_ids[i], NULL);
+        //     pthread_exit(0);
+        // }
+
+        pthread_exit(0);
+
     }
     return 0;
 }
@@ -198,15 +202,18 @@ int main(int argc, char *argv[])
         printf("Error creating spawn thread for server!\n");
         exit(EXIT_FAILURE);
     }
-    
+    // Delay starting of client threads to allow other servers to launch
+    sleep(10);
     if (pthread_create(&clientThread, NULL, spawnClient, &machine_id) != 0)
     {
         printf("Error creating spawn thread for server!\n");
         exit(EXIT_FAILURE);
     }
 
-    pthread_join(serverThread, NULL);
-    pthread_join(clientThread, NULL);
+    // End as soon as stopped is true
+    while(!stopped){
+        sleep(1);
+    }
 
     time_t ltime;
     ltime=time(NULL);
