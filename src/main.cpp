@@ -18,7 +18,7 @@
 
 // Configuration Parameters
 const char *MACHINE_IPS[] = {"10.176.69.128", "10.176.69.128", "10.176.69.128", "10.176.69.128"};
-#define PORT 7777
+#define PORT 8732
 #define MAX_CONNECTIONS 4
 #define BUFFER_SIZE 2048
 
@@ -54,7 +54,7 @@ void *spawnServer(void *data)
     int socket_desc, socket_fd;
     struct sockaddr_in server_addr;
     struct sockaddr_storage srv_storage;
-    const char *ip = MACHINE_IPS[machine_id];
+    // const char *ip = MACHINE_IPS[machine_id];
 
     socket_desc = socket(AF_INET, SOCK_STREAM, 0);
     if (socket_desc == -1)
@@ -64,7 +64,7 @@ void *spawnServer(void *data)
     }
 
     server_addr.sin_family = AF_INET;
-    server_addr.sin_addr.s_addr = inet_addr(ip);
+    server_addr.sin_addr.s_addr = INADDR_ANY;
     server_addr.sin_port = htons(PORT);
 
     if (bind(socket_desc, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
@@ -140,7 +140,7 @@ void *spawnClient(void *data)
 
         if (connect(socket_fd[i], (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
         {
-            printf("Error binding socket to port!\n");
+            printf("Error binding client socket to port!\n");
             exit(EXIT_FAILURE);
         }
     }
