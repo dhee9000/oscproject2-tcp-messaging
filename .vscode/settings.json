@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.js": "javascriptreact",
+        "*.tpp": "cpp",
+        "iostream": "cpp"
+    },
+    "terminal.integrated.shell.windows": "cmd.exe"
+}
