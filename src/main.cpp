@@ -103,16 +103,13 @@ void *spawnServer(void *data)
             pthread_exit(0);
         }
 
-        // Wait for server threads to end
-        // if (active_connections >= MAX_CONNECTIONS)
-        // {
-        //     for (int i = 0; i < MAX_CONNECTIONS; i++)
-        //         pthread_join(thread_ids[i], NULL);
-        //     pthread_exit(0);
-        // }
-
-        pthread_exit(0);
-
+        //Wait for server threads to end
+        if (active_connections >= MAX_CONNECTIONS)
+        {
+            for (int i = 0; i < MAX_CONNECTIONS; i++)
+                pthread_join(thread_ids[i], NULL);
+            pthread_exit(0);
+        }
     }
     return 0;
 }
