@@ -17,7 +17,7 @@
 #include <pthread.h>
 
 // Configuration Parameters
-const char *MACHINE_IPS[] = {"10.176.69.128", "10.176.69.128", "10.176.69.128", "10.176.69.128"};
+const char *MACHINE_IPS[] = {"10.176.69.128", "10.176.69.129", "10.176.69.130", "10.176.69.131"};
 #define PORT 8732
 #define MAX_CONNECTIONS 4
 #define BUFFER_SIZE 2048
